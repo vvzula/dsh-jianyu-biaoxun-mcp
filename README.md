@@ -73,7 +73,7 @@
 dsh plugin --profile <profile> add github:vvzula/dsh-jianyu-biaoxun-mcp
 ```
 
-发布到 npm 后也可以：
+或者直接从 npm 装（已发布 `0.2.1`）：
 
 ```sh
 dsh plugin --profile <profile> add dsh-jianyu-biaoxun-mcp
