@@ -1,112 +1,89 @@
-# Publishing this plugin
+# 发布清单
 
-This directory is already shaped for publication. The remaining steps need your GitHub account and repository name.
+仓库地址已定：`https://github.com/vvzula/dsh-jianyu-biaoxun-mcp`（public）。包名 `dsh-jianyu-biaoxun-mcp`（2026-11-27 查过 npm 未被占用）。
 
-## 1. Pick the GitHub owner and repository name
+## 1. 建仓库并推送
 
-The package name is **`dsh-jianyu-biaoxun-mcp`** (checked available on npm on 2026-11-27). Create a **public** GitHub repository with the same name:
-
-```text
-https://github.com/<owner>/dsh-jianyu-biaoxun-mcp
-```
-
-Replace every `OWNER` placeholder in `package.json` and `README.md` with your GitHub owner name:
-
-```powershell
-$owner = 'your-github-name'
-Get-ChildItem -Path . -Recurse -File -Include package.json,README.md |
-  ForEach-Object { (Get-Content $_ -Raw).Replace('OWNER', $owner) | Set-Content $_ -NoNewline -Encoding UTF8 }
-```
-
-## 2. Push the repository
+在 GitHub 网页新建一个 **public** 仓库，名字 `dsh-jianyu-biaoxun-mcp`，**不要**勾选 README / .gitignore / license 初始化（本地已有提交）。建好后：
 
 ```sh
-git init
-git add .
-git commit -m "Initial release"
-git branch -M main
-git remote add origin https://github.com/<owner>/dsh-jianyu-biaoxun-mcp.git
 git push -u origin main
 ```
 
-Do not commit `node_modules`, a profile's `cordis.patch.yml`, or any API key. The bundle's own `cordis.patch.yml` contains only the default endpoint and namespace.
+推完在仓库 About → Topics 里加 **`dsh-plugin`**，收录 CI 会检查这个。
 
-After pushing, add the **`dsh-plugin`** topic to the repository (About → Topics). The listing CI requires it.
+不要提交 `node_modules`、profile 配置、任何密钥。`cordis.patch.yml` 里只有默认地址和命名空间。
 
-## 3. Wait one day
+## 2. 等满 1 天
 
-The submission gate rejects repositories younger than **1 day**. Creating the repository today and opening the PR tomorrow is the safe path.
+收录 CI 会拒绝创建不满 1 天的仓库。今天建、明天提 PR 最稳。
 
-## 4. Submit to `awesome-dsh-plugin`
+## 3. 提交到 awesome-dsh-plugin
 
-The market (`dshmarket`) reads its catalog from [awesome-dsh-plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin). Do **not** open a PR in the market repository itself.
+市场（`dshmarket`）的目录来自 [awesome-dsh-plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)，**不要**给市场仓库本身提条目。
 
-Fork the list repository, then add exactly one file:
+Fork 后只新增一个文件：
 
 ```text
-data/plugins/<owner>__dsh-jianyu-biaoxun-mcp.yml
+data/plugins/vvzula__dsh-jianyu-biaoxun-mcp.yml
 ```
 
-Content (replace `<owner>`):
+内容直接复制 [`docs/market-entry.yml`](market-entry.yml)：
 
 ```yaml
-url: https://github.com/<owner>/dsh-jianyu-biaoxun-mcp
-name: <owner>/dsh-jianyu-biaoxun-mcp
+url: https://github.com/vvzula/dsh-jianyu-biaoxun-mcp
+name: vvzula/dsh-jianyu-biaoxun-mcp
 category: tools
 description:
-  en: Connects the Jianyu Biaoxun MCP data service to DSH with an in-panel endpoint and API-key form.
-  zh: 把剑鱼标讯的 MCP 数据服务接入 DSH，并在设置页内填写服务地址与 API Key。
-icon: https://raw.githubusercontent.com/<owner>/dsh-jianyu-biaoxun-mcp/main/assets/icon-180.png
+  en: Ask for tender notices, buying units and budgets right in the chat, using Jianyu Biaoxun tender data.
+  zh: 在对话框里直接问招标采购信息：找项目、看预算、查采购单位，数据来自剑鱼标讯。
+icon: https://raw.githubusercontent.com/vvzula/dsh-jianyu-biaoxun-mcp/main/assets/icon-180.png
 ```
 
-Rules that matter here:
+几条硬规则：
 
-- `description.en` is required, one line, accurate, no marketing.
-- `icon` must be a GitHub-hosted **raster** image (png/jpg/jpeg/webp); this repo ships `assets/icon-180.png`.
-- `category` is one of the list's values; `tools` fits an MCP connector.
-- Do not write an `npm:` field in the YAML; the npm mapping is picked up automatically.
-- One PR can add at most 3 entries.
-- If the description contains `: `, quote the YAML value.
+- `description.en` 必填，单行，平实准确；`description.zh` 可选。
+- `icon` 必须是 GitHub 托管的**位图**（png/jpg/jpeg/webp），不能用 svg；本仓库用 `assets/icon-180.png`（180×180）。
+- 不要写 `npm:` 字段，npm 映射由 registry 自动识别。
+- 一个 PR 最多 3 条。
+- 值里出现 `: `（英文冒号加空格）时必须加引号；现在的中文值是全角冒号，不用引号。
 
-Open the PR, wait for CI, and fix anything it reports on the same branch. After merge, the site and the market rebuild usually within a day.
+提 PR 后等 CI，报错就在同一分支改。合并后站点和市场通常一天内刷新。
 
-## 5. npm release (optional)
+## 4. npm 发布（可选）
 
-Publishing to npm is optional and does not affect listing. It makes installs faster and lets the market show a download count.
+不影响收录，只是装得更快、市场能显示下载量。
 
 ```sh
 npm publish --access public
 ```
 
-Before publishing:
+发布前确认：
 
-- `package.json` has no `private` field.
-- The package name `dsh-jianyu-biaoxun-mcp` is available (checked 2026-11-27).
-- `repository` points to the GitHub repository you listed; without this the npm package is not linked to the entry.
-- `peerDependencies` keep `@deepseek-ai/schemastery` outside the package; DSH's profile install supplies it.
+- `package.json` 没有 `private`
+- `repository` 指向上面这个仓库
+- `peerDependencies` 里 `@deepseek-ai/schemastery` 不进包体，由 DSH 的 profile 安装提供
 
-After `npm publish`, verify the artifact rather than trusting the command output:
+发完以 registry 为准，不要只看命令输出：
 
 ```sh
 curl https://registry.npmjs.org/dsh-jianyu-biaoxun-mcp
 ```
 
-Wait until `dist-tags.latest` matches the version and `dist.tarball` downloads. A brand-new npm name can briefly expose a placeholder or a missing tarball, and the China mirror can keep a stale `latest` for a few minutes. Install once from a clean profile before submitting.
+等 `dist-tags.latest` 等于当前版本、`dist.tarball` 能下下来，再在干净 profile 里装一次。
 
-## 6. Local verification before submission
+## 5. 提交前自检
 
 ```sh
 node --check index.js
 node --check client.js
+npm pack --dry-run
 ```
 
-Checklist:
-
-- [ ] `package.json` has `dsh.bundle.patch` and `dsh.client.platform`
-- [ ] `cordis.patch.yml` row `name` equals the package name
-- [ ] Repository is public and at least 1 day old
-- [ ] `dsh-plugin` topic is present
-- [ ] No API key, profile file, or `node_modules` in the repository
-- [ ] `assets/icon-180.png` opens and is a square raster image
-- [ ] README install command uses the real owner/repo
-- [ ] The plugin installs and the settings tab opens once before submitting
+- [ ] `package.json` 有 `dsh.bundle.patch` 和 `dsh.client.platform`
+- [ ] `cordis.patch.yml` 的 `name` 等于包名
+- [ ] 仓库 public、满 1 天、有 `dsh-plugin` topic
+- [ ] 仓库里没有密钥、profile 文件、`node_modules`
+- [ ] `assets/icon-180.png` 是 180×180 位图，能正常打开
+- [ ] README、`docs/DETAIL.md`、`locale/*.json`、`client.js` 里的文案是给销售看的白话
+- [ ] 插件装一次，设置页能打开

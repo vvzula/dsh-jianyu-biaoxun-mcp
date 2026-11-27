@@ -32,7 +32,7 @@ const SERVER_NAME_PATTERN = /^[A-Za-z0-9_-]{1,32}$/
 /** Plugin configuration. */
 export const Config = z.object({
   url: z.string().default(DEFAULT_URL).description('MCP 服务地址（streamable-http，例如 https://jyaiopen.jianyu360.cn/mcp）').volatile(),
-  token: z.string().role('secret').description('剑鱼开放平台 API Key，作为 JianYu-Api-Key 请求头发送；留空时读取 tokenEnv 指定的环境变量，保存后界面会掩码显示').volatile(),
+  token: z.string().role('secret').description('剑鱼密钥（开放平台 API Key），作为 JianYu-Api-Key 请求头发送；留空时读取 tokenEnv 指定的环境变量，保存后界面掩码显示').volatile(),
   serverName: z.string().default('jianyu').description('工具命名空间，工具将显示为 mcp__<名称>__<工具名>；仅允许字母、数字、下划线和短横线'),
   tokenEnv: z.string().role('credential-ref').default(DEFAULT_TOKEN_ENV).description('令牌留空时读取的环境变量名'),
   startupTimeoutMs: z.number().min(1).default(30000).description('连接与初始工具发现的超时（毫秒）'),
@@ -106,7 +106,7 @@ export function apply(ctx, config) {
     const spec = resolveSpec(config)
     stopRegistration()
     if (spec.token === '') {
-      ctx.logger.warn('剑鱼标讯 MCP：未配置访问令牌，暂不注册 MCP 服务器；请在内置插件页的「剑鱼标讯 MCP」标签中填写令牌。')
+      ctx.logger.warn('剑鱼标讯：还没填密钥，暂时不连接数据服务。请在 设置 → 内置插件 → 剑鱼标讯 里填写密钥。')
       return
     }
     removeRegistration = ctx.mcpManager.register(spec.serverName, {
