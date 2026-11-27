@@ -1,0 +1,8 @@
+# 剑鱼标讯 MCP：把剑鱼标讯的 MCP 数据服务注册进 DSH。
+# The row id stays stable; the module name must match the package name.
+- insert:
+    - id: jianyu-biaoxun-mcp
+      name: dsh-jianyu-biaoxun-mcp
+      config:
+        url: https://jyaiopen.jianyu360.cn/mcp
+        serverName: jianyu

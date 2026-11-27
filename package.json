@@ -1,0 +1,68 @@
+{
+  "name": "dsh-jianyu-biaoxun-mcp",
+  "version": "0.2.0",
+  "description": "Connects the Jianyu Biaoxun MCP data service to DeepSeek Harness with an in-panel endpoint and API-key form.",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "docs/DETAIL.md",
+    "icon.svg",
+    "assets/icon-180.png",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "manifestVersion": 1,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-settings-plugins"
+      ]
+    }
+  },
+  "engines": {
+    "node": ">=20",
+    "dsh": ">=0.2.2-rc.1 <0.3.0-0"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/schemastery": "^3.19.0"
+  },
+  "keywords": [
+    "deepseek",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "mcp",
+    "jianyu",
+    "biaoxun",
+    "tendering",
+    "procurement"
+  ],
+  "author": "vvzula",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vvzula/dsh-jianyu-biaoxun-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vvzula/dsh-jianyu-biaoxun-mcp/issues"
+  },
+  "homepage": "https://github.com/vvzula/dsh-jianyu-biaoxun-mcp#readme"
+}

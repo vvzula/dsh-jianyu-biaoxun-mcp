@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Jianyu Biaoxun MCP",
+    "description": "Connect the Jianyu Biaoxun MCP data service to DSH: enter the endpoint and access token in Settings → Built-in plugins → Jianyu Biaoxun MCP, and tendering-data tools appear as mcp__jianyu__*.",
+    "detail": "docs/DETAIL.md"
+  }
+}

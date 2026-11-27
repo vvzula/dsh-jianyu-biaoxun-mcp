@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "剑鱼标讯 MCP",
+    "description": "把剑鱼标讯的 MCP 数据服务接入 DSH：在「设置 → 内置插件 → 剑鱼标讯 MCP」里填写服务地址与访问令牌，标讯数据工具会以 mcp__jianyu__* 出现在对话中。",
+    "detail": "docs/DETAIL.md"
+  }
+}
