@@ -1,6 +1,6 @@
 {
   "name": "dsh-jianyu-biaoxun-mcp",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "在对话里直接查剑鱼标讯的招标采购信息：找项目、看预算、查采购单位。",
   "type": "module",
   "main": "index.js",
